@@ -9,6 +9,7 @@ pids
 
 bower_components
 node_modules
+public/
 
 # Users Environment Variables
 .DS_Store
