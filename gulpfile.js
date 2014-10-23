@@ -88,16 +88,12 @@ gulp.task('copy-component-assets', function() {
 
 gulp.task('scripts-app', function() {
 
-  // app.js
-  var sources = glob.sync('./app/**/*.js')
-
-  var bundler = browserify({
+  var bundler = browserify('./app', {
     bundleExternal: false,
     cache: {},
     debug: true,
-    entries: sources,
     extensions: ['.hbs'],
-    fullPaths: true,
+    fullPaths: false,
     insertGlobals: false,
     packageCache: {}
   })
