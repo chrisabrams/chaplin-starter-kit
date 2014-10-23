@@ -1,0 +1,21 @@
+{
+  "name": "chaplin-starter-kit",
+  "main": "index.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/chrisabrams/chaplin-starter-kit",
+  "authors": [
+    "Chris Abrams <mail@chrisabrams.com>"
+  ],
+  "description": "Single Page App using Chaplin (on top of Backbone), Browserify, ES6, Gulp, and friends.",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0"
+  }
+}
