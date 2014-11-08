@@ -89,7 +89,7 @@ gulp.task('copy-component-assets', function() {
 gulp.task('scripts-app', function() {
 
   // app.js
-  var sources = glob.sync('./app/**/*.js')
+  var sources = glob.sync(__dirname + '/app/**/*.js')
 
   var bundler = browserify({
     bundleExternal: false,
@@ -108,18 +108,8 @@ gulp.task('scripts-app', function() {
 
   var bundle = function() {
 
-    // Alias map app controllers
-    var controllersPath = path.join(__dirname, '/app/controllers')
-    var controllers = glob.sync('**/*.js', {cwd: controllersPath})
-
-    controllers.forEach(function(controller) {
-
-      var controllerPath = controllersPath + '/' + controller
-      var controllerName = 'controllers/' + controller.replace('.js', '')
-
-      bundler.require(controllerPath, {expose: controllerName})
-
-    })
+    // Alias expose index controller
+    bundler.require('./app/controllers/index.js', {expose: 'controllers/index'})
 
     // Map to files in vendor.js
     bundler.external('jquery')
