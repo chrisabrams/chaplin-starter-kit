@@ -145,18 +145,38 @@ gulp.task('scripts-app', function() {
     }
 
     // Build project
-    bundler
-      .transform(hbsfy)
-      .transform(to5Browserify)
-      .bundle()
-      .on('error', function() {
-        console.log(arguments)
-      })
-      .pipe(source('app.js'))
-      .pipe(gulp.dest('./public/js/'))
-      .on('end', function() {
-        console.log('public/js/app.js created.')
-      })
+    if(watching()) {
+
+      bundler
+        .transform(hbsfy)
+        .transform(to5Browserify)
+        .bundle()
+        .on('error', function() {
+          console.log(arguments)
+        })
+        .pipe(source('app.js'))
+        .pipe(gulp.dest('./public/js/'))
+        .pipe(livereload())
+        .on('end', function() {
+          console.log('public/js/app.js created.')
+        })
+
+    } else {
+
+      bundler
+        .transform(hbsfy)
+        .transform(to5Browserify)
+        .bundle()
+        .on('error', function() {
+          console.log(arguments)
+        })
+        .pipe(source('app.js'))
+        .pipe(gulp.dest('./public/js/'))
+        .on('end', function() {
+          console.log('public/js/app.js created.')
+        })
+
+    }
   }
 
   if(watching()) {
