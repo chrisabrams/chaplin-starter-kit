@@ -89,47 +89,60 @@ gulp.task('copy-component-assets', function() {
 gulp.task('scripts-app', function() {
 
   // app.js
-  var sources = glob.sync('./app/**/*.js')
 
-  var bundler = browserify({
-    bundleExternal: false,
-    cache: {},
-    debug: true,
-    entries: sources,
-    extensions: ['.hbs'],
-    fullPaths: true,
-    insertGlobals: false,
-    packageCache: {}
-  })
+  var bundler;
 
   if (watching()) {
-    bundler = watchify(bundler)
+
+    bundler = watchify(browserify('./app', {
+      bundleExternal: true,
+      cache: {},
+      debug: true,
+      detectGlobals: false,
+      extensions: ['.hbs'],
+      fullPaths: true,
+      insertGlobals: false,
+      packageCache: {}
+    }))
+
+  } else {
+
+    bundler = browserify('./app', {
+      bundleExternal: false,
+      cache: {},
+      debug: true,
+      detectGlobals: false,
+      extensions: ['.hbs'],
+      fullPaths: false,
+      insertGlobals: false,
+      packageCache: {}
+    })
+
   }
 
   var bundle = function() {
 
     // Alias map app controllers
-    var controllersPath = path.join(__dirname, '/app/controllers')
-    var controllers = glob.sync('**/*.js', {cwd: controllersPath})
+    var controllers = glob.sync(path.join(__dirname, './app/controllers/*.js'))
 
-    controllers.forEach(function(controller) {
+    controllers.forEach(function(controllerPath) {
 
-      var controllerPath = controllersPath + '/' + controller
-      var controllerName = 'controllers/' + controller.replace('.js', '')
-
+      var controllerName = controllerPath.replace('.js', '').split('app/')[1]
       bundler.require(controllerPath, {expose: controllerName})
 
     })
 
     // Map to files in vendor.js
-    bundler.external('jquery')
-    bundler.external('underscore')
-    bundler.external('backbone')
-    bundler.external('chaplin')
-    bundler.external('handlebars')
-    bundler.external('hbsfy/runtime')
-    bundler.external('moment')
-    bundler.external('moment-timezone')
+    if(!watching()) {
+      bundler.external('jquery')
+      bundler.external('underscore')
+      bundler.external('backbone')
+      bundler.external('chaplin')
+      bundler.external('handlebars')
+      bundler.external('hbsfy/runtime')
+      bundler.external('moment')
+      bundler.external('moment-timezone')
+    }
 
     // Build project
     bundler
@@ -162,7 +175,7 @@ gulp.task('scripts-vendor', function(done) {
     cache: {},
     debug: false,
     entries: ['./app/vendor.js'],
-    fullPaths: false,
+    fullPaths: (watching()) ? true : false,
     insertGlobals: false,
     packageCache: {}
   })
@@ -219,7 +232,7 @@ gulp.task('styles', ['stylus'], function(done) {
 })
 
 /*
-Note: sourcemaps are funky atm so they are disabled until this funkyness is resolved
+Note: sourcemaps are inline atm
 */
 gulp.task('stylus', function () {
 
@@ -259,10 +272,15 @@ gulp.task('t', function () {
 
 })
 
-gulp.task('w', ['b'], function() {
-  livereload.listen()
+gulp.task('w', function() {
 
-  gulp.watch('app/**/*.styl', ['styles']).on('change', livereload.changed)
-  gulp.watch('public/**').on('change', livereload.changed)
+  sequence('clean', ['copy', 'scripts-app', 'styles'], function() {
+
+    livereload.listen()
+
+    gulp.watch('app/**/*.styl', ['styles']).on('change', livereload.changed)
+    gulp.watch('public/**').on('change', livereload.changed)
+
+  })
 
 })
