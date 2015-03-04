@@ -2,7 +2,7 @@
 
 ## Tech
 - Single Page App
-- ES6 via 6to5
+- ES6 via Babel (formerlly 6to5)
 
 ## Stack
 - Backbone
@@ -31,7 +31,7 @@
 
 ### Start app
 
-    node index
+    npm start
 
 App is now viewable at [localhost:9999](http://localhost:9999)
 
