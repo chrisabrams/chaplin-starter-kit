@@ -34,3 +34,5 @@
     node index
 
 App is now viewable at [localhost:9999](http://localhost:9999)
+
+## License [MIT](https://github.com/chrisabrams/chaplin-starter-kit/blob/master/LICENSE)

@@ -17,7 +17,7 @@ var browserify    = require('browserify'),
     source        = require('vinyl-source-stream'),
     sourcemaps    = require('gulp-sourcemaps'),
     stylus        = require('gulp-stylus'),
-    to5Browserify = require('6to5-browserify'),
+    to5Browserify = require('babelify'),
     watchify      = require('watchify')
 
 var argv     = minimist(process.argv.slice(2)),
@@ -292,15 +292,10 @@ gulp.task('t', function () {
 
 })
 
-gulp.task('w', function() {
-
-  sequence('clean', ['copy', 'scripts-app', 'styles'], function() {
-
-    livereload.listen()
-
-    gulp.watch('app/**/*.styl', ['styles']).on('change', livereload.changed)
-    gulp.watch('public/**').on('change', livereload.changed)
-
-  })
-
+require('paradigm-gulp-watch')({
+  gulp: gulp,
+  livereload: livereload,
+  sequence: ['copy', 'scripts-app', 'styles']
 })
+
+gulp.task('w', ['watch'])
