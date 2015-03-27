@@ -10,6 +10,7 @@
 - Browserify
 - Chaplin
 - Express 4.x
+- Fontello Icons
 - Gulp
 - Handlebars 1.x
 - Stylus

@@ -5,9 +5,9 @@ var Log = require('../lib/logger'),
       silent: true
     })
 
-module.exports = function(server) {
+module.exports = (server) => {
 
-  server.get('', function(req, res, next) {
+  server.get('', (req, res, next) => {
 
     var templateData = {
       layout: false
@@ -17,7 +17,7 @@ module.exports = function(server) {
 
   })
 
-  server.get('*', function(req, res) {
+  server.get('*', (req, res) => {
 
     return res.status(404).send()
 

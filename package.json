@@ -19,7 +19,8 @@
     "chaplin",
     "browserify",
     "es6",
-    "6to5"
+    "6to5",
+    "babel"
   ],
   "author": "Chris Abrams <mail@chrisabrams.com>",
   "license": "MIT",
@@ -43,8 +44,8 @@
     "underscore": "^1.6.0"
   },
   "devDependencies": {
-    "babel": "^4.6.6",
-    "babelify": "^5.0.3",
+    "babel": "^4.7.16",
+    "babelify": "^5.0.4",
     "browserify": "^9.0.3",
     "chai": "^2.1.1",
     "execSync": "^1.0.2",
@@ -60,13 +61,15 @@
     "minimist": "^1.1.0",
     "mocha": "^2.1.0",
     "nib": "^1.1.0",
+    "paradigm-gulp-stylus": "*",
     "paradigm-gulp-watch": "0.0.2",
+    "paradigm-server-express": "0.0.3",
     "route-cache": "^0.1.1",
     "run-sequence": "^1.0.2",
     "sinon": "^1.12.2",
     "sinon-chai": "^2.7.0",
     "stylus": "^0.50.0",
-    "vinyl-source-stream": "^1.0.0",
-    "watchify": "^2.4.0"
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^2.6.2"
   }
 }

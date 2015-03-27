@@ -234,6 +234,33 @@ gulp.task('scripts-vendor', function(done) {
 
 })
 
+/*
+Note: sourcemaps are inline atm
+*/
+require('paradigm-gulp-stylus')({
+  dest: './public/css/app.css',
+  gulp: gulp,
+  imports: [
+    'nib',
+    path.join(__dirname, './app/styles/_definitions.styl')
+  ],
+  paths: [],
+  src: [
+    './app/styles/base/app.styl',
+    './app/styles/**/_xs.styl',
+    './app/styles/**/_sm.styl',
+    './app/styles/**/_md.styl',
+    './app/styles/**/_lg.styl',
+    './app/styles/**/_xl.styl'
+  ]
+})
+
+require('paradigm-gulp-watch')({
+  gulp: gulp,
+  livereload: livereload,
+  sequence: ['b']
+})
+
 gulp.task('styles', ['stylus'], function(done) {
 
   src([
@@ -251,37 +278,6 @@ gulp.task('styles', ['stylus'], function(done) {
 
 })
 
-/*
-Note: sourcemaps are inline atm
-*/
-gulp.task('stylus', function () {
-
-  return src([
-    './app/styles/**/_index.styl',
-    './app/components/**/styles/_index.styl'
-  ])
-  .pipe(stylus({
-    cache: false,
-    import: [path.join(__dirname, './app/styles/vars/_index.styl')],
-    sourcemap: {
-      basePath: 'public/css',
-      inline: true,
-      sourceRoot: '/app'
-    },
-    use: [nib()]
-  }))
-  /*.pipe(sourcemaps.init({
-    loadMaps: true
-  }))*/
-  .pipe(concat('app.css'))
-  /*.pipe(sourcemaps.write('./public/css', {
-    includeContent: false,
-    sourceRoot: '/app'
-  }))*/
-  .pipe(dest('./public/css'))
-
-})
-
 gulp.task('t', function () {
 
   return src([
@@ -290,12 +286,6 @@ gulp.task('t', function () {
   ], {read: false})
   .pipe(mocha({reporter: 'spec'}))
 
-})
-
-require('paradigm-gulp-watch')({
-  gulp: gulp,
-  livereload: livereload,
-  sequence: ['copy', 'scripts-app', 'styles']
 })
 
 gulp.task('w', ['watch'])
