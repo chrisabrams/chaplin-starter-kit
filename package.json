@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "gulp w",
-    "test": "gulp t"
+    "test": "gulp t",
+    "postinstall": "./node_modules/.bin/bower install"
   },
   "repository": {
     "type": "git",
@@ -46,8 +47,10 @@
   "devDependencies": {
     "babel": "^4.7.16",
     "babelify": "^5.0.4",
+    "bower": "^1.4.1",
     "browserify": "^9.0.3",
     "chai": "^2.1.1",
+    "chalk": "^1.0.0",
     "execSync": "^1.0.2",
     "glob": "^4.0.6",
     "gulp": "^3.8.11",
@@ -55,6 +58,7 @@
     "gulp-livereload": "^3.8.0",
     "gulp-mocha": "^2.0.0",
     "gulp-mocha-phantomjs": "^0.5.3",
+    "gulp-size": "^1.2.1",
     "gulp-sourcemaps": "^1.5.0",
     "gulp-stylus": "^2.0.1",
     "gulp-util": "^3.0.4",
